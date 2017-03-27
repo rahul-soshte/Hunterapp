@@ -1,44 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:orientation="horizontal"
-        >
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:hint="Search Location here"/>
-
-        <Button
-            android:id="@id/search_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:onClick="onMapSearch"
-            android:text="Search" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:orientation="horizontal"
-        >
-        <Button
-            android:id="@+id/center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:onClick="onFindCenter"
-            android:text="GETCENTER" />
-    </LinearLayout>
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
 
@@ -49,7 +12,49 @@
         android:layout_height="match_parent"
         tools:context="com.hfad.planmap.MapsActivity" />
 
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="18dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="14dp"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:hint="Search Location here"/>
+
+        <Button
+            android:id="@id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/editText"
+            android:layout_marginTop="14dp"
+            android:onClick="onMapSearch"
+            android:text="Search" />
 
 
 
-    </LinearLayout>
+    <Button
+        android:id="@+id/center"
+        android:text="Center"
+        android:layout_below="@id/editText"
+        android:layout_centerHorizontal="true"
+        android:onClick="onFindCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <Button
+        android:id="@+id/lol2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/center"
+        android:layout_below="@id/editText"
+        android:text="Clear Circles"
+        android:onClick="ClearMarkers"
+        />
+
+    </RelativeLayout>
