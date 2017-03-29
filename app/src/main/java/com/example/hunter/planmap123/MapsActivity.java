@@ -14,6 +14,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -27,11 +28,12 @@ import java.util.Iterator;
 import java.util.List;
 
 
-public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLongClickListener,OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarkerDragListener,GoogleMap.OnMapLongClickListener,OnMapReadyCallback {
 
     private ArrayList<Places> LatSort=new ArrayList<Places>();
   private ArrayList<Places> LongSort=new ArrayList<Places>();
 private List <Draggable> mCircles=new ArrayList<Draggable>();
+public static final double RADIUS_OF_EARTH_METERS=6371009;
 
    private LatLngBounds bound;
 private LatLng Southwest;
@@ -46,17 +48,52 @@ public class Draggable
 {
     private final Circle circle;
     private Marker centerMarker;
-    private double radius;
+    private Marker radiusMarker;
 
+    public double radius;
+public Draggable(LatLng center,double radius)
+{
+    this.radius=radius;
+    centerMarker=mMap.addMarker(new MarkerOptions().position(center).draggable(true));
+
+    radiusMarker=mMap.addMarker(new MarkerOptions().position(toRadiusLatLng(center,radius)).draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+    circle = mMap.addCircle(new CircleOptions().center(center).radius(radius).strokeColor(Color .BLACK).fillColor(5));
+}
     public Draggable(LatLng center, LatLng radiusLatLng) {
         this.radius = toRadiusMeters(center, radiusLatLng);
+        centerMarker=mMap.addMarker(new MarkerOptions().position(center).draggable(true));
+        radiusMarker=mMap.addMarker(new MarkerOptions().position(radiusLatLng).draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
         circle = mMap.addCircle(new CircleOptions().center(center).radius(radius).strokeColor(Color .BLACK).fillColor(5));
 
+    }
+
+    public boolean onMarkerMoved(Marker marker)
+    {
+        if(marker.equals(centerMarker))
+        {
+            circle.setCenter(marker.getPosition());
+            radiusMarker.setPosition(toRadiusLatLng(marker.getPosition(),radius));
+            return true;
+
+        }
+        if(marker.equals(radiusMarker))
+        {
+            radius=toRadiusMeters(centerMarker.getPosition(),radiusMarker.getPosition());
+            //radiusMarker.setPosition(toRadiusLatLng(marker.getPosition(),radius));
+            circle.setRadius(radius);
+
+            return true;
+
+
+        }
+        return false;
 
     }
 
+
 }
+
     private static double toRadiusMeters(LatLng center,LatLng radius)
     {
         float[] result =new float[1];
@@ -64,6 +101,13 @@ public class Draggable
         return result[0];
 
     }
+
+public static LatLng toRadiusLatLng(LatLng center,double radius)
+{
+    double radiusAngle=Math.toDegrees(radius / RADIUS_OF_EARTH_METERS)/Math.cos(Math.toRadians(center.latitude));
+    return new LatLng(center.latitude,center.longitude+radiusAngle);
+
+}
 
     private GoogleMap mMap;
     private ArrayList<Places> drenched=new ArrayList<Places>();
@@ -115,6 +159,7 @@ Iterator itr,itr1;
 //Conditions for Southwest
         //MinLat and MinLong
     }
+
     public void ClearMarkers(View v)
     {
         mMap.clear();
@@ -135,18 +180,46 @@ Iterator itr,itr1;
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+mMap.setOnMarkerDragListener(this);
         mMap.setOnMapLongClickListener(this);
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker)
+    {
+     onMarkerMoved(marker);
+    }
+    @Override
+    public void onMarkerDragEnd(Marker marker)
+    {
+        onMarkerMoved(marker);
+    }
+    @Override
+    public void onMarkerDrag(Marker marker)
+    {
+        onMarkerMoved(marker);
+    }
+    private void onMarkerMoved(Marker marker)
+    {
+        for(Draggable draggable:mCircles)
+        {
+            if(draggable.onMarkerMoved(marker))
+            {
+                break;
+            }
+        }
     }
 
     @Override
     public void onMapLongClick(LatLng point)
     {
+               //mMap.clear();
         //We know the center let's place the outline at a point 3/4
         View view=((SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map)).getView();
-        LatLng radiusLatLng=mMap.getProjection().fromScreenLocation(new Point(view.getHeight()*3/4,view.getWidth()*3/4));
+        LatLng radiusLatLng=mMap.getProjection().fromScreenLocation(new Point(view.getHeight()/4,view.getWidth()/4));
         Draggable circle1 =new Draggable(point,radiusLatLng);
-mCircles.add(circle1);
+        mCircles.add(circle1);
+
 
     }
 
