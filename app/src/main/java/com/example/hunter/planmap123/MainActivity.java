@@ -13,16 +13,20 @@ public class MainActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setContentView(R.layout.activity_main);
-        ListView listChats=getListView();
-        ArrayAdapter<Chats> listAdapter=new ArrayAdapter<Chats>(this,android.R.layout.simple_list_item_1,Chats.chat);
-listChats.setAdapter(listAdapter);
+        // setContentView(R.layout.activity_main);
+        ListView listChats = getListView();
+        ArrayAdapter<Chats> listAdapter = new ArrayAdapter<Chats>(this, android.R.layout.simple_list_item_1, Chats.chat);
+        listChats.setAdapter(listAdapter);
     }
-
-@Override
-    public void onListItemClick (ListView listView, View itemView, int position, long id)
-    {
-        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-        startActivity(intent);
+    @Override
+    public void onListItemClick(ListView listView, View itemView, int position, long id) {
+        if (position == 0) {
+            Intent intent =new Intent(MainActivity.this,MapsActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(MainActivity.this, MyActivity.class);
+            startActivity(intent);
+        }
     }
 }
+

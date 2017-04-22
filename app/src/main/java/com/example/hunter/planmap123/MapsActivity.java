@@ -35,6 +35,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
 private List <Draggable> mCircles=new ArrayList<Draggable>();
 public static final double RADIUS_OF_EARTH_METERS=6371009;
 
+
    private LatLngBounds bound;
 private LatLng Southwest;
     private LatLng NorthEast;
@@ -82,10 +83,7 @@ public Draggable(LatLng center,double radius)
             radius=toRadiusMeters(centerMarker.getPosition(),radiusMarker.getPosition());
             //radiusMarker.setPosition(toRadiusLatLng(marker.getPosition(),radius));
             circle.setRadius(radius);
-
             return true;
-
-
         }
         return false;
 
@@ -122,6 +120,8 @@ Iterator itr,itr1;
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
     }
     public void onMapSearch(View view) {
         EditText locationSearch = (EditText) findViewById(R.id.editText);
@@ -213,13 +213,12 @@ mMap.setOnMarkerDragListener(this);
     @Override
     public void onMapLongClick(LatLng point)
     {
-               //mMap.clear();
+        //mMap.clear();
         //We know the center let's place the outline at a point 3/4
         View view=((SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map)).getView();
         LatLng radiusLatLng=mMap.getProjection().fromScreenLocation(new Point(view.getHeight()/4,view.getWidth()/4));
         Draggable circle1 =new Draggable(point,radiusLatLng);
         mCircles.add(circle1);
-
 
     }
 
