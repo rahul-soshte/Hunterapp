@@ -6,9 +6,15 @@
     android:layout_width="match_parent"
     >
     <FrameLayout
+        android:id="@+id/autocomplete_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
     <ListView android:id="@+id/drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"

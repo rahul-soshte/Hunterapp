@@ -6,7 +6,8 @@ public class Chats {
     public static final Chats[] chat = {
             new Chats("Event 1"),
             new Chats("Event 2"),
-            new Chats("Event 3")
+            new Chats("Event 3"),
+            new Chats("Event 4")
 
     };
 

@@ -2,6 +2,7 @@ package com.example.hunter.planmap123;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ public class MyActivity extends Activity {
     private String[] titles;
     private ListView drawerList;
     private ActionBarDrawerToggle drawerToggle;
-
+private int currentPosition=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +29,11 @@ public class MyActivity extends Activity {
         drawerList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_activated_1, titles));
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (savedInstanceState == null) {
+        if (savedInstanceState != null) {
+            currentPosition=savedInstanceState.getInt("position");
+            setActionBarTitle(currentPosition);
+        }
+        else{
             selectItem(0);
         }
         //Create the ActionBarDrawerLayout
@@ -52,6 +57,21 @@ public class MyActivity extends Activity {
     getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
+        getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                FragmentManager fragMan=getFragmentManager();
+                Fragment fragment=fragMan.findFragmentByTag("visible_fragment");
+                if(fragment instanceof MainMapFragment)
+                {
+                    currentPosition=0;
+                }
+                setActionBarTitle(currentPosition);
+
+                drawerList.setItemChecked(currentPosition,true);
+
+            }
+        });
     }
     @Override
     public void onConfigurationChanged(Configuration newConfig)
@@ -97,15 +117,15 @@ setActionBarTitle(position);
 
     private void selectItem(int position)
     {
+        currentPosition=position;
+
         Fragment fragment;
 
         switch(position)
         {
 
-
             case 1:
                 fragment=new MainMapFragment();
-
                 break;
             case 2:
                 fragment=new MainMapFragment();
@@ -116,17 +136,30 @@ setActionBarTitle(position);
             case 4:
                 fragment=new MainMapFragment();
                 break;
+            case 5:
+                fragment=new MainMapFragment();
+                break;
+            case 6:
+                fragment=new MainMapFragment();
+                break;
             default:fragment=new MainMapFragment();
 
         }
         FragmentTransaction ft= getFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame,fragment);
+        ft.replace(R.id.content_frame,fragment,"visible_fragement");
         ft.addToBackStack(null);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
+        setActionBarTitle(position);
+        drawerLayout.closeDrawer(drawerList);
 
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        outState.putInt("position",currentPosition);
     }
 
     
-};
-
+}
