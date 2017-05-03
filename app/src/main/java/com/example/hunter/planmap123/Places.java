@@ -10,7 +10,7 @@ public class Places {
      String name;
      double longitude;
      double latitude;
-Places(String name,double latitude,double longitude)
+public Places(String name,double latitude,double longitude)
 {
     this.name=name;
     this.longitude=longitude;
