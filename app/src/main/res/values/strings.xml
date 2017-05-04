@@ -2,10 +2,9 @@
     <string name="app_name">Planmap</string>
     <string name="title_activity_maps">Map</string>
     <string-array name="titles">
-        <item>Maps</item>
+        <item>Users</item>
         <item>GetCenter/ShortestPath</item>
         <item>Circle Of Suggestion</item>
-        <item>Autcomplete</item>
         <item>Schedule</item>
         <item>Related Blogs</item>
 
@@ -42,5 +41,14 @@
 
         ]]>
     </string>
+<string-array name="place_names">
+    <item>Restaurants</item>
+    <item>Cafes</item>
+    <item>Hospitals</item>
+    <item>Schools</item>
+    </string-array>
+    <string-array name="inornearspin">
+    <item>IN</item>
+    </string-array>
 
 </resources>

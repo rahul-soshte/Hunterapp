@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_suggestion"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.hunter.planmap123.Suggestion.SuggestionActivity">
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+     />
+
+    <Spinner
+    android:id="@+id/place_type"
+        android:text="Place_type"
+        android:entries="@array/place_names"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>
+    <Spinner
+        android:id="@+id/inornear"
+        android:text="In"
+        android:entries="@array/inornearspin"
+        android:layout_toRightOf="@id/place_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:id="@+id/place"
+        android:text="Place"
+        android:layout_toRightOf="@id/inornear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <Button
+        android:id="@+id/Suggest"
+        android:text="Suggest"
+        android:onClick="OnSuggest"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/inornear"
+        android:layout_alignStart="@id/inornear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+
+</RelativeLayout>

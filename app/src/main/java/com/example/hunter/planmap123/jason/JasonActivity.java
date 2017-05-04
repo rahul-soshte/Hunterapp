@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 //AIzaSyCineFailFgYFaUrUGfMxrrxsUKYSSFvIU
 //https://maps.googleapis.com/maps/api/place/textsearch/xml?query=restaurants+in+Sydney&key= AIzaSyCineFailFgYFaUrUGfMxrrxsUKYSSFvIU
+
 public class JasonActivity extends Activity {
 
     private String TAG=JasonActivity.class.getSimpleName();

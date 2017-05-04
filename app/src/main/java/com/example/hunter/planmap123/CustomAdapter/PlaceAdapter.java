@@ -32,8 +32,6 @@ public PlaceAdapter(Context context,int textViewResourceId,ArrayList<Places> pla
         {
             LayoutInflater inflater=(LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v=inflater.inflate(R.layout.list_item,null);
-
-
         }
         Places i=places.get(position);
   if(i!=null)

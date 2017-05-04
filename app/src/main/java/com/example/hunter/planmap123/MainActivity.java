@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.hunter.planmap123.Events.EventsOne;
+import com.example.hunter.planmap123.Suggestion.SuggestionActivity;
 import com.example.hunter.planmap123.jason.JasonActivity;
 
 
@@ -17,7 +19,7 @@ public class MainActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         // setContentView(R.layout.activity_main);
         ListView listChats = getListView();
-        ArrayAdapter<Chats> listAdapter = new ArrayAdapter<Chats>(this, android.R.layout.simple_list_item_1, Chats.chat);
+        ArrayAdapter<EventsOne> listAdapter = new ArrayAdapter<EventsOne>(this, android.R.layout.simple_list_item_1, EventsOne.event);
         listChats.setAdapter(listAdapter);
     }
 
@@ -36,6 +38,12 @@ public class MainActivity extends ListActivity {
         else if(position==3)
         {
             Intent intent = new Intent(MainActivity.this, JasonActivity.class);
+            startActivity(intent);
+
+        }
+        else if(position==4)
+        {
+            Intent intent=new Intent(MainActivity.this, SuggestionActivity.class);
             startActivity(intent);
 
         }
